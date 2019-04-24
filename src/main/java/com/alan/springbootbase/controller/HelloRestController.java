@@ -9,7 +9,6 @@ public class HelloRestController {
 
     @RequestMapping("hello")
     public String hello(){
-
         return "hello Alan";
     }
 }
