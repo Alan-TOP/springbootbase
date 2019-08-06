@@ -1,10 +1,11 @@
 package com.alan.springbootbase.controller;
 
-import net.sf.json.xml.XMLSerializer;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.json.XML;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.text.SimpleDateFormat;
@@ -12,24 +13,46 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("rest")
+@Slf4j
 public class HelloRestController {
 
-    Logger logger = LoggerFactory.getLogger(HelloRestController.class);
+    @Value("${com.alan.title}")
+    private String title;
 
+
+    /**
+     * 测试方法
+     * @return
+     */
     @RequestMapping("hello")
     public String hello(){
-        logger.debug("rest hello");
-        return "hello Alan";
+        log.info("rest hello");
+        System.out.println("rest hello");
+        return "hello "+title;
     }
 
+    @PostMapping(value = "/getPost",produces = "application/json;charset=UTF-8")
+    public String getPost(@RequestBody String resStr) {
+        JSONObject reqJson=new JSONObject(resStr);
+        return reqJson.getString("name");
+    }
+
+    /**
+     * XML转json数据
+     * @return
+     */
     @RequestMapping("aa")
     public  String  putData(){
 
         String xml=getMsg();
         System.out.println("xml:"+xml);
-        //XMLSerializer aaaaaa=new XMLSerializer();
+
         JSONObject xmlJSONObj = XML.toJSONObject(xml);
-       // String aa= aaaaaa.read(xml).toString();
+        /*
+        //该方式报错了，暂未找到解决方法
+        XMLSerializer aaaaaa=new XMLSerializer();
+        String aa= aaaaaa.read(xml).toString();*/
+
         System.out.println("aa:"+xmlJSONObj.getJSONObject("Service").getJSONObject("Service_Body").getJSONObject("request").getString("KEY_LABEL"));
         System.out.println("aa:"+xmlJSONObj.toString());
         /*
@@ -38,6 +61,10 @@ public class HelloRestController {
         return xmlJSONObj.toString();
     }
 
+    /**
+     * 获取XML字符串
+     * @return
+     */
     private String getMsg() {
         StringBuffer sb = new StringBuffer();
         //必须,消息报文发送的时间戳(14位)(YYYYMMDDHHmmss)
@@ -55,7 +82,6 @@ public class HelloRestController {
         sb.append( "<version_id>").append(now).append("</version_id>");
         sb.append( "<service_time>").append(now).append("</service_time>");
         sb.append( "</Service_Header>");
-
         sb.append( "<Service_Body>");
         sb.append( "<ext_attributes></ext_attributes>");
         sb.append( "<request>");
@@ -65,6 +91,5 @@ public class HelloRestController {
         sb.append( "</Service>");
 
         return sb.toString();
-
     }
 }
