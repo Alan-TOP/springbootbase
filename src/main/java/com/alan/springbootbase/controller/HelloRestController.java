@@ -1,13 +1,12 @@
 package com.alan.springbootbase.controller;
 
+import com.alan.springbootbase.utils.SocketUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,7 +17,10 @@ public class HelloRestController {
 
     @Value("${com.alan.title}")
     private String title;
-
+    @Value("${com.alan.socketUrl}")
+    String socketUrl;
+    @Value("${com.alan.socketPort}")
+    int socketPort;
 
     /**
      * 测试方法
@@ -35,6 +37,15 @@ public class HelloRestController {
     public String getPost(@RequestBody String resStr) {
         JSONObject reqJson=new JSONObject(resStr);
         return reqJson.getString("name");
+    }
+
+    /**
+     * socket测试
+     * @return
+     */
+    @GetMapping("/sendSocket")
+    public String sendSocket(){
+        return SocketUtil.sendSocket(socketUrl,socketPort,getMsg());
     }
 
     /**
