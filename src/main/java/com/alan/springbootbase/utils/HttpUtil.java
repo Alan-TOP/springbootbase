@@ -1,6 +1,8 @@
 package com.alan.springbootbase.utils;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
@@ -101,6 +103,102 @@ public class HttpUtil {
     public static String doGet(String httpUrl,Map<String,String> parameters,boolean isRepeat,Header ...headers) throws IOException {
         return doGetHttpRequest(httpUrl, parameters, isRepeat, false,headers);
     }
+
+    /**
+     * Send a post request
+     * @param url         Url as string
+     * @param body        Request body as string
+     * @return response   Response as string
+     * @throws IOException
+     */
+    static public String postJson(String url, String body) throws IOException {
+        return postJson(url, body, null);
+    }
+
+    /**
+     * Send a post request
+     * @param url         Url as string
+     * @param body        Request body as string
+     * @param headers     Optional map with headers
+     * @return response   Response as string
+     * @throws IOException
+     */
+    static public String postJson(String url, String body,
+                              Map<String, String> headers) throws IOException {
+        headers.put("Content-Type", "application/json");
+        return fetch("POST", url, body, headers);
+    }
+    /**
+     * Send a request
+     * @param method      HTTP method, for example "GET" or "POST"
+     * @param url         Url as string
+     * @param body        Request body as string
+     * @param headers     Optional map with headers
+     * @return response   Response as string
+     * @throws IOException
+     */
+    static public String fetch(String method, String url, String body,
+                               Map<String, String> headers) throws IOException {
+        // connection
+        URL u = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection)u.openConnection();
+        conn.setConnectTimeout(60000);
+        conn.setReadTimeout(60000);
+
+        // method
+        if (method != null) {
+            conn.setRequestMethod(method);
+        }
+        // headers
+        if (headers != null) {
+            for(String key : headers.keySet()) {
+                conn.addRequestProperty(key, headers.get(key));
+            }
+        }
+        // body
+        if (body != null) {
+            conn.setDoOutput(true);
+            OutputStream os = conn.getOutputStream();
+            os.write(body.getBytes("UTF-8"));
+            os.flush();
+            os.close();
+        }
+
+        // response
+        InputStream is = conn.getInputStream();
+        String response = streamToString(is);
+        is.close();
+        // handle redirects
+        if (conn.getResponseCode() == 301) {
+            String location = conn.getHeaderField("Location");
+            return fetch(method, location, body, headers);
+        }
+        return response;
+    }
+
+    /**
+     * Read an input stream into a string
+     * @param in
+     * @return
+     * @throws IOException
+     */
+    static public String streamToString(InputStream in) throws IOException {
+//		StringBuffer out = new StringBuffer();
+//		byte[] b = new byte[4096];
+//		for (int n; (n = in.read(b)) != -1;) {
+//			out.append(new String(b, 0, n));
+//		}
+//		return out.toString();
+        StringBuffer out = new StringBuffer();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
+        String line = "";
+        while((line = reader.readLine()) != null){
+            out.append(line);
+            //System.out.println(line);
+        }
+        return out.toString();
+    }
+
     /**
      *Post请求
      * @param httpUrl 请求路径
