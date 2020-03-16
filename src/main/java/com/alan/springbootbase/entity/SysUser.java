@@ -3,11 +3,14 @@ package com.alan.springbootbase.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -20,8 +23,9 @@ import java.util.Date;
 @Table(name = "sys_users")
 @DynamicUpdate
 @DynamicInsert
-@Data
-public class SysUser {
+@Getter
+@Setter
+public class SysUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

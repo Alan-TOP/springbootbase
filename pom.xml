@@ -71,14 +71,47 @@
         </dependency>
 
         <!-- 热部署：https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-devtools</artifactId>-->
+            <!--<version>2.1.6.RELEASE</version>-->
+            <!--&lt;!&ndash; optional=true,依赖不会传递，该项目依赖devtools；-->
+            <!--之后依赖该项目的项目如果想要使用devtools，需要重新引入 &ndash;&gt;-->
+            <!--<optional>true</optional>-->
+        <!--</dependency>-->
+        <!--springboot中的redis依赖-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--</dependency>-->
+
+        <!-- redis所需 (自带lettuce 5.1.4.RELEASE) lettuce是springboot2.x后连接redis推荐使用的客户端 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <version>2.1.6.RELEASE</version>
-            <!-- optional=true,依赖不会传递，该项目依赖devtools；
-            之后依赖该项目的项目如果想要使用devtools，需要重新引入 -->
-            <optional>true</optional>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <!-- lettuce pool 缓存连接池 -->
+        <!-- <commons-pool2.version>2.6.1</commons-pool2.version> -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <!--fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.60</version>
+        </dependency>
+        <!--netty-->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.34.Final</version>
+        </dependency>
+
+
+
+
 
         <!-- 日志logback转log4j-->
         <!-- 在创建Spring Boot工程时，我们引入了spring-boot-starter，其中包含了spring-boot-starter-logging，

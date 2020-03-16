@@ -65,36 +65,37 @@ public class SysUserController {
     }
 
     @GetMapping("/findOne")
-    public SysUser findOne(){
-        return sysUserService.findOne(111);
+    public SysUser findOne(int id){
+        return sysUserService.findOne(id);
     }
 
     @GetMapping("/save")
     public SysUser saveEntity(){
         SysUser sysUser =new SysUser();
-        sysUser.setCode("sssssss");
+        sysUser.setCode("code");
+        sysUser.setUsername("username");
+        sysUser.setPassWord("password");
         sysUser.setEmail("ansssss@163.com");
+        sysUser.setPhoneNum("phonenum");
         return sysUserService.saveEntity(sysUser);
     }
 
     @GetMapping("/update")
-    public SysUser updateEntity(){
-        SysUser sysUser =new SysUser();
-        sysUser.setId(127);
+    public SysUser updateEntity(SysUser sysUser){
+
+        sysUser.setId(sysUser.getId());
         sysUser.setCode("aaaa");
         sysUser.setEmail("uyuyuyuyu@163.com");
         return sysUserService.updateEntity(sysUser);
     }
 
     @GetMapping("/delete")
-    public void deleteEntyty(){
-        SysUser sysUser =new SysUser();
-        sysUser.setId(126);
+    public void deleteEntyty(SysUser sysUser){
         sysUserService.deleteEntyty(sysUser);
     }
 
     @GetMapping("/deleteById")
-    public void deleteById(){
-        sysUserService.deleteById(125);
+    public void deleteById(int id){
+        sysUserService.deleteById(id);
     }
 }
