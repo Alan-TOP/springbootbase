@@ -5,7 +5,7 @@ spring:
     url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&serverTimezone=UTC&useSSL=false
     username: root
     password: qwerty
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
   redis:
@@ -21,10 +21,10 @@ spring:
     timeout: 1000ms           # 连接超时时间（毫秒）
 
 
-
 #########log4j(这里可以不做指定  除非自己重新命名)##########
-logging:
-  config: classpath:log4j.xml
+#logging:
+#  config: classpath:log4j.xml
+
 ##系统变量信息
 com:
   alan:

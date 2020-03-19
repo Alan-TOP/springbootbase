@@ -86,12 +86,15 @@
     </Appenders>
     <!--切换输出级别-->
     <Loggers>
+        <!-- 级别顺序（低到高）：TRACE < DEBUG < INFO < WARN < ERROR < FATAL -->
         <Root level="info">
             <AppenderRef ref="Console"/>
+            <!--
             <AppenderRef ref="debug"/>
             <AppenderRef ref="info"/>
             <AppenderRef ref="warn"/>
             <AppenderRef ref="error"/>
+            -->
         </Root>
     </Loggers>
 </Configuration>

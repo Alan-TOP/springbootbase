@@ -1,6 +1,7 @@
 package com.alan.springbootbase.controller;
 
 import com.alan.springbootbase.entity.SysUser;
+import com.alan.springbootbase.service.SysUserRedisService;
 import com.alan.springbootbase.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,58 +19,58 @@ import java.util.List;
  *
  **/
 @RestController
-@RequestMapping("/user")
-public class SysUserController {
+@RequestMapping("/redis/user")
+public class SysUserRedisController {
 
     @Autowired
-    private SysUserService sysUserService;
+    private SysUserRedisService sysUserRedisService;
 
     @GetMapping("/findAll")
     public List<SysUser> findAll(){
-        return sysUserService.findAll();
+        return sysUserRedisService.findAll();
     }
 
     @GetMapping("/findByName")
     public List<SysUser> findByName(){
 
-        return sysUserService.findByName("Alan");
+        return sysUserRedisService.findByName("Alan");
     }
 
     @GetMapping("/findLikeName")
     public List<SysUser> findLikeName(){
-        return sysUserService.findLikeName("qq");
+        return sysUserRedisService.findLikeName("qq");
     }
 
     @GetMapping("/findByUsernameStartingWith")
     public List<SysUser> findByUsernameStartingWith(String name){
-        return sysUserService.findByUsernameStartingWith("q");
+        return sysUserRedisService.findByUsernameStartingWith("q");
     }
 
     @GetMapping("/findByUsernameEndingWith")
     public List<SysUser> findByUsernameEndingWith(String name){
-        return sysUserService.findByUsernameEndingWith("w");
+        return sysUserRedisService.findByUsernameEndingWith("w");
     }
 
     @GetMapping("/findByUsernameContaining")
     public List<SysUser> findByUsernameContaining(String name){
-        return sysUserService.findByUsernameContaining("s");
+        return sysUserRedisService.findByUsernameContaining("s");
     }
 
     @GetMapping("/findLikeEmail")
     public List<SysUser> findLikeEmail(){
 
-        return sysUserService.findLikeEmail("ss");
+        return sysUserRedisService.findLikeEmail("ss");
     }
 
     @GetMapping("/findLikePhone")
     public List<SysUser> findLikePhone(){
 
-        return sysUserService.findLikePhone("q");
+        return sysUserRedisService.findLikePhone("q");
     }
 
     @GetMapping("/findOne")
     public SysUser findOne(int id){
-        return sysUserService.findOne(id);
+        return sysUserRedisService.findOne(id);
     }
 
     @GetMapping("/save")
@@ -80,7 +81,7 @@ public class SysUserController {
         sysUser.setPassWord("password");
         sysUser.setEmail("ansssss@163.com");
         sysUser.setPhoneNum("phonenum");
-        return sysUserService.saveEntity(sysUser);
+        return sysUserRedisService.saveEntity(sysUser);
     }
 
     @GetMapping("/update")
@@ -89,16 +90,16 @@ public class SysUserController {
         sysUser.setId(sysUser.getId());
         sysUser.setCode("aaaa");
         sysUser.setEmail("uyuyuyuyu@163.com");
-        return sysUserService.updateEntity(sysUser);
+        return sysUserRedisService.updateEntity(sysUser);
     }
 
     @GetMapping("/delete")
     public void deleteEntyty(SysUser sysUser){
-        sysUserService.deleteEntyty(sysUser);
+        sysUserRedisService.deleteEntyty(sysUser);
     }
 
     @GetMapping("/deleteById")
     public void deleteById(int id){
-        sysUserService.deleteById(id);
+        sysUserRedisService.deleteById(id);
     }
 }

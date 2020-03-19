@@ -1,12 +1,10 @@
 package com.alan.springbootbase.config;
 
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +25,7 @@ import java.time.Duration;
  * 所以不需要在做了，只需要在配置文件做相关连接池以及redis的连接配置即可 不过自动配置的RedisTemplate<Object,
  * Object>默认使用jdk的序列化机制，我们需要配置json的序列化 Jackson2JsonRedisSerializer
  * 以及cache的缓存管理器配置
- * @author 刘彦军
+ * @author Alan
  *
  */
 @Configuration
@@ -132,12 +130,14 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         LettuceConnectionFactory jedisConnectionFactory = (LettuceConnectionFactory) redisTemplate.getConnectionFactory();
-        jedisConnectionFactory.setDatabase(2);      //指定dbindex
+        //指定db index
+        jedisConnectionFactory.setDatabase(2);
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
         jedisConnectionFactory.resetConnection();
 
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(60*20)) // 20分钟缓存失效
+                // 20分钟缓存失效
+                .entryTtl(Duration.ofSeconds(60*20))
                 // 设置key的序列化方式
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 // 设置value的序列化方式

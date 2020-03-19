@@ -2,22 +2,20 @@ package com.alan.springbootbase.service.impl;
 
 import com.alan.springbootbase.entity.SysUser;
 import com.alan.springbootbase.repository.SysUserRepository;
+import com.alan.springbootbase.service.SysUserRedisService;
 import com.alan.springbootbase.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Demo class
- *
- * @author Alan
- * @date 2019/10/31
- */
 @Service
 @Slf4j
-public class SysUserServiceImpl implements SysUserService {
+public class SysUserRedisServiceImpl implements SysUserRedisService {
 
     @Autowired
     private SysUserRepository sysUserRepository;
@@ -63,18 +61,26 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
 
+    /**
+     * 以下设计Redis的集成
+     * @param id
+     * @return
+     */
 
+    @Cacheable(value = "redisCache",key="#id")
     @Override
     public SysUser findOne(int id) {
         log.info("查询数据库：findOne");
         return sysUserRepository.getOne(id);
     }
 
+    @CachePut(value = "redisCache",key="#sysUser.id")
     @Override
     public SysUser saveEntity(SysUser sysUser) {
         log.info("查询数据库：saveEntity");
         return sysUserRepository.save(sysUser);
     }
+    @CachePut(value = "redisCache",key="#sysUser.id")
     @Override
     public SysUser updateEntity(SysUser sysUser) {
 
@@ -82,12 +88,13 @@ public class SysUserServiceImpl implements SysUserService {
         return sysUserRepository.save(sysUser);
     }
 
+    @CacheEvict(value = "redisCache",key="#sysUser.id")
     @Override
     public void deleteEntyty(SysUser sysUser) {
         log.info("查询数据库：deleteEntyty");
         sysUserRepository.delete(sysUser);
     }
-
+    @CacheEvict(value = "redisCache",key="#id")
     @Override
     public void deleteById(int id) {
 
