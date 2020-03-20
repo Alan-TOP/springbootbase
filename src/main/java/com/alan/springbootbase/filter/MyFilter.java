@@ -1,6 +1,7 @@
 package com.alan.springbootbase.filter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,16 +13,18 @@ import java.time.LocalTime;
 
 /**
  * @description:
- * Filter的设置与使用
+ * Filter过滤器的设置与使用
  *
  * 实现了计算请求耗时
  *
  * @author: Alan
  * @create: 2019-08-06 14:31
  **/
-@WebFilter(filterName = "myFilter",urlPatterns = "/*")
+//@WebFilter(filterName = "myFilter",urlPatterns = "/*")
+//@Order(5)
 @Slf4j
 public class MyFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }

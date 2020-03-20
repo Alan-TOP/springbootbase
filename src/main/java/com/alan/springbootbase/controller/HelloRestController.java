@@ -1,5 +1,7 @@
 package com.alan.springbootbase.controller;
 
+import com.alan.springbootbase.entity.ResultVO;
+import com.alan.springbootbase.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,10 +35,10 @@ public class HelloRestController {
      * @return
      */
     @RequestMapping("hello")
-    public String hello(){
+    public ResultVO hello(){
         log.info("rest hello");
         System.out.println("rest hello");
-        return "hello "+title;
+        return ResultUtil.success("hello "+title);
     }
 
 

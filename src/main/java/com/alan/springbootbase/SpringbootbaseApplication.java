@@ -15,11 +15,14 @@ import org.springframework.cache.annotation.EnableCaching;
  * */
 @EnableCaching
 @SpringBootApplication
-@ServletComponentScan(basePackages = "com.alan")
+//ServletComponentScan 识别Servlet.Filter,Listener； 详见FilterConfig
+//@ServletComponentScan(basePackages = "com.alan")
 public class SpringbootbaseApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootbaseApplication.class, args);
     }
+
+
 
 }

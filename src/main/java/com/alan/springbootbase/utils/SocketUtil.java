@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * @description:
+ * @description: Socket基本工具类
  * @author: Alan
  * @create: 2019-08-07 16:21
  **/
