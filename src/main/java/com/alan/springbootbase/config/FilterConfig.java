@@ -57,7 +57,7 @@ public class FilterConfig {
      */
 
     @Bean
-    public FilterRegistrationBean reqResFilter1() {
+    public FilterRegistrationBean iPFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
 
         IPFilter ipFilter = new IPFilter();
@@ -79,7 +79,7 @@ public class FilterConfig {
     }
 
     @Bean
-    public FilterRegistrationBean reqResFilter() {
+    public FilterRegistrationBean myFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         MyFilter myFilter = new MyFilter();
         filterRegistrationBean.setFilter(myFilter);
